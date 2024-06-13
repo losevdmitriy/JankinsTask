@@ -1,0 +1,29 @@
+
+volumes:
+    pg_dockerTask:
+
+services:
+  dockerTask_db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=dockerTask_db
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - pg_dockerTask:/var/lib/postgresql/data
+
+    ports:
+      - "5432:5432"
+
+  app:
+    restart: always
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dockerTask_db
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://dockerTask_db:5432/dockerTask_db'
+      JAVA_OPTS: '-Xmx512m'

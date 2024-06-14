@@ -13,15 +13,6 @@ pipeline {
             }
         }
 
-        stage('Preparation') {
-                    steps {
-                        script {
-                            // Скачать все зависимости Maven заранее
-                            sh 'mvn dependency:go-offline -B'
-                        }
-                    }
-                }
-
          stage('Stop Existing Containers') {
                 steps {
                    script {

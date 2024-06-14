@@ -9,7 +9,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Шаг для клонирования репозитория с GitHub
-                git branch: 'main', url: 'https://github.com/losevdmitriy/JenkinsTask.git'
+                git branch: 'master', url: 'https://github.com/losevdmitriy/JenkinsTask.git'
             }
         }
         stage('Build and Start Containers') {

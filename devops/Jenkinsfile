@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        COMPOSE_PROJECT_NAME = 'testDocker' // Имя проекта Docker Compose
+        COMPOSE_PROJECT_NAME = 'testdocker' // Имя проекта Docker Compose
     }
 
     stages {

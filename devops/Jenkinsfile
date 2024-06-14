@@ -8,10 +8,10 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'master', url: "${env.GIT_REPO}"
-            }
+         stage('Checkout') {
+                   steps {
+                        git credentialsId: env.GIT_CREDENTIALS_ID, url: 'git@github.com:losevdmitriy/JenkinsTask.git'
+                    }
         }
         stage('Build') {
             steps {

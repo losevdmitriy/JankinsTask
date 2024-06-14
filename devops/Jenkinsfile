@@ -2,38 +2,21 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        IMAGE_NAME = 'yourdockerhubusername/spring-app'
-        GIT_REPO = 'https://github.com/yourusername/your-repo.git'
+        COMPOSE_PROJECT_NAME = 'testDocker' // Имя проекта Docker Compose
     }
 
     stages {
-         stage('Checkout') {
-                   steps {
-                        git credentialsId: env.GIT_CREDENTIALS_ID, url: 'git@github.com:losevdmitriy/JenkinsTask.git'
-                    }
-        }
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                script {
-                    def app = docker.build("${env.IMAGE_NAME}")
-                }
+                // Шаг для клонирования репозитория с GitHub
+                git branch: 'main', url: 'https://github.com/losevdmitriy/JenkinsTask.git'
             }
         }
-        stage('Push') {
+        stage('Build and Start Containers') {
             steps {
+                // Шаг для сборки и запуска контейнеров с помощью Docker Compose
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${env.DOCKER_CREDENTIALS_ID}") {
-                        def app = docker.image("${env.IMAGE_NAME}")
-                        app.push()
-                    }
-                }
-            }
-        }
-        stage('Deploy') {
-            steps {
-                script {
-                    dockerCompose.up()
+                    sh 'docker-compose up -d'
                 }
             }
         }

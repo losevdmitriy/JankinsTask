@@ -12,13 +12,19 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/losevdmitriy/JenkinsTask.git'
             }
         }
-        stage('Build and Start Containers') {
-            steps {
-                // Шаг для сборки и запуска контейнеров с помощью Docker Compose
-                script {
-                    sh 'docker-compose up -d'
+         stage('Stop Existing Containers') {
+                steps {
+                   script {
+                            sh 'docker-compose down'
+                        }
+                    }
                 }
-            }
-        }
+         stage('Build and Start Containers') {
+                    steps {
+                        script {
+                            sh 'docker-compose up -d --build'
+                        }
+                    }
+                }
     }
 }
